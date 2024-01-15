@@ -1,0 +1,22 @@
+Lexing - tokenizing words and expressions
+Buildling a parse tree
+Parser:
+    Informs of syntax errors
+Binding, resolution identify scope
+Types stored in attributes or symbol tables
+Intermediate representation
+Optimization
+Byte Code or P - code (portable among chips and devices)
+VM that will translate bytecode to specific chip - simplicity and portability but slower runtime
+Need a runtime that will take care of GC and related things at execution
+Single pass compilers that interleave parsing, analysis and code generation. No global info. Memory is precious.
+AST - Abstract Syntax Tree
+Use source to source transpiler that. We will use an existing IR target.
+JIT - just in time compilation
+Compiler - compiles and transpiles, doesnt execute.
+Interpreter - executes line by line.
+Go is a curiosity - compiler and interpreter.
+CPython is the same as go. Most scripting languages are like this.
+Lex and Yacc - lexical parsers and analyzers.
+
+Trying to find scanner and parser in Rust.
