@@ -1,4 +1,4 @@
-package com.craftinginterpreters.laga;
+package laga;
 
 class Token {
     final TokenType type;
@@ -15,6 +15,5 @@ class Token {
 
     public String toString() {
         return type + " " + lexeme + " " + literal;
-    
     }
 }

@@ -1,4 +1,4 @@
-package com.craftinginterpreters.laga;
+package laga;
 
 import java.io.BufferedReader;
 import java.io.IOException;

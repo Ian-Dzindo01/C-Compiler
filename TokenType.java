@@ -1,4 +1,4 @@
-package com.craftinginterpreters.laga;
+package laga;
 
 enum TokenType {
     // Single-character tokens.

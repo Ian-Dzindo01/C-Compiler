@@ -38,3 +38,4 @@ Maybe add string manipulation, trig functions, file I/O, networking...
 Expressions vs statements
 Maybe implement exact columns and where in the line the error occurred. To that in the end.
 Lexemes - "var", "language", "lox".
+We wont be using regexes to recognize different lexemes. We have to understand how the scanner truly works.
