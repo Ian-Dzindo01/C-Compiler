@@ -1,4 +1,4 @@
-package laga;
+package Laga;
 
 class Token {
     final TokenType type;

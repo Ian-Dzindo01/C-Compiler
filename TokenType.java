@@ -1,4 +1,4 @@
-package laga;
+package Laga;
 
 enum TokenType {
     // Single-character tokens.

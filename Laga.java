@@ -21,7 +21,6 @@ public class Laga{
             runPrompt();
         }
         } 
-    }
 
     private static void runFile(String path) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
@@ -59,3 +58,4 @@ public class Laga{
     }
 
     static boolean hadError = false;
+}

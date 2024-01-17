@@ -1,17 +1,17 @@
-package laga;
+package Laga;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import laga.Laga;
+import Laga.Laga;
 
-import static laga.TokenType.*
+import static laga.TokenType.*;
 
 class Scanner {
     private final String source;
-    private final List <Token> tokens = newArrayList<>();
+    private final List <Token> tokens = new ArrayList<>();
 
     private int start = 0;    // next 3 lines for the Scanner function below
     private int current = 0;
@@ -87,7 +87,7 @@ class Scanner {
 
         case '/':
             if (match('/')) {
-                while (peek() != '\n' && !isAtEnd() advance());
+                while (peek() != '\n' && !isAtEnd()) advance();
             } else {
                 addToken(SLASH);
             }
@@ -101,6 +101,7 @@ class Scanner {
           break;
 
         }
+    }
 
         private boolean match(char expected) {
             if (isAtEnd()) return false;
@@ -117,12 +118,12 @@ class Scanner {
 
         private void string() {
             while (peek() != '"' && !isAtEnd()) {
-                if peek() == '\n') line++;
+                if (peek() == '\n') line++;
                 advance();
             }
 
             if (isAtEnd()) {
-                Laga.error(line, "Unterminated string.")
+                Laga.error(line, "Unterminated string.");
                 return;
             }
 
@@ -131,11 +132,7 @@ class Scanner {
             String value = source.substring(start + 1, current - 1);    // remove surrounding quotes
             addToken(STRING, value);
         }
-
-        
-
-      }
-}
+};
       
         
 
