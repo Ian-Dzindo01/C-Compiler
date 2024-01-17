@@ -85,17 +85,21 @@ class Scanner {
           addToken(match('=') ? GREATER_EQUAL : GREATER);
           break;
 
-          default:
-          Laga.error(line, "Unexpected character.");  // handling all other types of unknown characters
-          break;
-
-          case '/':
+        case '/':
             if (match('/')) {
                 while (peek() != '\n' && !isAtEnd() advance());
             } else {
                 addToken(SLASH);
             }
             break;
+
+        case '"': string(); break;
+
+
+        default:
+          Laga.error(line, "Unexpected character.");  // handling all other types of unknown characters
+          break;
+
         }
 
         private boolean match(char expected) {
@@ -111,9 +115,26 @@ class Scanner {
             return source.charAt(current);
         }
 
+        private void string() {
+            while (peek() != '"' && !isAtEnd()) {
+                if peek() == '\n') line++;
+                advance();
+            }
+
+            if (isAtEnd()) {
+                Laga.error(line, "Unterminated string.")
+                return;
+            }
+
+            advance(); // closing "
+
+            String value = source.substring(start + 1, current - 1);    // remove surrounding quotes
+            addToken(STRING, value);
+        }
+
+        
+
       }
-
-
 }
       
         
