@@ -62,6 +62,16 @@ class Scanner {
           case ';': addToken(SEMICOLON); break;
           case '*': addToken(STAR); break; 
 
+          case ' ':
+          case '\r':
+          case '\t':
+            // Ignore whitespace.
+            break;
+    
+          case '\n':
+            line++;
+            break;
+            
           case '!':
           addToken(match('=') ? BANG_EQUAL : BANG); // "If the current character is '=', add a token of type BANG_EQUAL; otherwise, add a token of type BANG."
           break;
@@ -78,6 +88,14 @@ class Scanner {
           default:
           Laga.error(line, "Unexpected character.");  // handling all other types of unknown characters
           break;
+
+          case '/':
+            if (match('/')) {
+                while (peek() != '\n' && !isAtEnd() advance());
+            } else {
+                addToken(SLASH);
+            }
+            break;
         }
 
         private boolean match(char expected) {
@@ -87,6 +105,12 @@ class Scanner {
             current++;
             return true;
         }
+
+        private char peek() {   // lookahead. The smaller it is the faster the scanner runs.
+            if (isAtEnd()) return '\0';
+            return source.charAt(current);
+        }
+
       }
 
 
