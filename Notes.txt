@@ -18,5 +18,21 @@ Interpreter - executes line by line.
 Go is a curiosity - compiler and interpreter.
 CPython is the same as go. Most scripting languages are like this.
 Lex and Yacc - lexical parsers and analyzers.
-
 Trying to find scanner and parser in Rust.
+JIT -  translation of program code into machine code occurs dynamically,
+at runtime, rather than ahead of time (AOT) during the compilation phase. Improve efficiency and performance.
+Java and C# use JITT
+The coexistence of an interpreter and a compiler in Lisp implementations reflects the language's emphasis on interactive development,
+rapid prototyping, and adaptability. This combination allows developers to enjoy the benefits of both compiled code for performance and interpreted code for
+flexibility during different stages of software development. - interactive development, incremental compilation, debugging and profiling,
+cross-platform development, runtime generation.
+No parentheses because print is built-in, not a library function.
+Reference counting and GC
+Build a GC
+Implement bitwise, shift, modulo, and conditional operators on your own.
+Difference between arguments and parameters.
+First class citizens.
+Closure functions.
+Prototype and class based languages.
+Maybe add string manipulation, trig functions, file I/O, networking...
+Expressions vs statements
