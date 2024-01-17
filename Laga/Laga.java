@@ -1,4 +1,4 @@
-package laga;
+package Laga;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class Laga{
 
     private static void run(String source) {
         Scanner scanner = new Scanner(source);
-        List<token> tokens = scanner.scanTokens();
+        List<Token> tokens = scanner.scanTokens();
     }
     
     static void error(int line, String message) 
@@ -58,4 +58,4 @@ public class Laga{
     }
 
     static boolean hadError = false;
-}
+    }

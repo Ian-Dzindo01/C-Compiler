@@ -7,7 +7,7 @@ import java.util.Map;
 
 import Laga.Laga;
 
-import static laga.TokenType.*;
+import static Laga.TokenType.*;
 
 class Scanner {
     private final String source;
@@ -38,7 +38,7 @@ class Scanner {
         this.source = source;
     }
 
-    list <Token> scanTokens() {
+    List <Token> scanTokens() {
         while (!isAtEnd()) {
             start = current;
             scanToken();
