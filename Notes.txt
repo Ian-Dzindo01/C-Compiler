@@ -41,3 +41,9 @@ Lexemes - "var", "language", "lox".
 We wont be using regexes to recognize different lexemes. We have to understand how the scanner truly works.
 Coalescing a run of invalid characters into a single error would give a nicer user experience - blob of 
 unknown characters.
+Lexical grammars of Python and Haskell are not regular because regular grammar does not support:
+    1. Nested structures
+    2. Balanced delimiters
+    3. Context sensitive lexing
+    4. Infinite recursions
+Instead Lex is used for Haskell and PLY for Python.

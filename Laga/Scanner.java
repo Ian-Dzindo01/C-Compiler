@@ -38,7 +38,7 @@ class Scanner {
         this.source = source;
     }
 
-    List <Token> scanTokens() {
+    public List <Token> scanTokens() {
         while (!isAtEnd()) {
             start = current;
             scanToken();
@@ -137,7 +137,10 @@ class Scanner {
         private void identifier() {
             while(isAlphaNumeric(peek())) advance();
 
-            addToken(IDENTIFIER);
+            String text = source.substring(start, current);
+            TokenType type = keywords.get(text);             // whether to use keywords token type
+            if (type == null) type = IDENTIFIER;             // otherwise it is a regular user identifier variable
+            addToken(type);
         }
 
         private boolean isAlpha(char c) {
@@ -200,9 +203,3 @@ class Scanner {
             addToken(STRING, value);
         }
 };
-      
-        
-
-
-
-
