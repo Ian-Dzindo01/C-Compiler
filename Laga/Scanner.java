@@ -7,7 +7,7 @@ import java.util.Map;
 
 import Laga.Laga;
 
-import static Laga.TokenType.*;
+import static Laga.TokenType.*;   // bad practice, but works perfect for this example
 
 class Scanner {
     private final String source;
