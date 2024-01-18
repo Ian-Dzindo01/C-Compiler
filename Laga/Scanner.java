@@ -48,6 +48,28 @@ class Scanner {
         return tokens;
     }
 
+    private static final Map<String, TokenType> keywords;
+
+    static {
+      keywords = new HashMap<>();
+      keywords.put("and",    AND);
+      keywords.put("class",  CLASS);
+      keywords.put("else",   ELSE);
+      keywords.put("false",  FALSE);
+      keywords.put("for",    FOR);
+      keywords.put("fun",    FUN);
+      keywords.put("if",     IF);
+      keywords.put("nil",    NIL);
+      keywords.put("or",     OR);
+      keywords.put("print",  PRINT);
+      keywords.put("return", RETURN);
+      keywords.put("super",  SUPER);
+      keywords.put("this",   THIS);
+      keywords.put("true",   TRUE);
+      keywords.put("var",    VAR);
+      keywords.put("while",  WHILE);
+    }
+
     private void scanToken() {
         char c = advance();
         switch (c) {
@@ -95,13 +117,50 @@ class Scanner {
 
         case '"': string(); break;
 
-
         default:
-          Laga.error(line, "Unexpected character.");  // handling all other types of unknown characters
-          break;
+        if (isDigit(c)) {
+            number();
 
+        } else if (isAlpha(c)) {
+            identifier();
+        
+        } else {
+            Laga.error(line, "Unexpected character.");  // handling all other types of unknown characters
+        }
+        break;
         }
     }
+        private boolean isDigit(char c) {
+            return c >= '0' && c <= '9';
+        }
+
+        private void identifier() {
+            while(isAlphaNumeric(peek())) advance();
+
+            addToken(IDENTIFIER);
+        }
+
+        private boolean isAlpha(char c) {
+            return (c >= 'a' && c<= 'z') ||
+                   (c >= 'a' && c<= 'z') ||
+                   c == '_';
+        }
+
+        private boolean isAlphaNumeric(char c) {
+            return isAlpha(c) || isDigit(c);
+        }
+
+        private void number() {
+            while (isDigit(peek())) advance();
+
+            if (peek() == '.' && isDigit(peekNext())) {
+                advance();
+
+                while (isDigit(peek())) advance();
+            }
+
+            addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
+        }
 
         private boolean match(char expected) {
             if (isAtEnd()) return false;
@@ -116,20 +175,28 @@ class Scanner {
             return source.charAt(current);
         }
 
+        private char peekNext() {
+            if (current + 1 >= source.length()) return '\0';
+            return source.charAt(current + 1);
+        }
+
+
         private void string() {
             while (peek() != '"' && !isAtEnd()) {
-                if (peek() == '\n') line++;
-                advance();
+            if (peek() == '\n') line++;
+            advance();
             }
 
             if (isAtEnd()) {
-                Laga.error(line, "Unterminated string.");
-                return;
+            Laga.error(line, "Unterminated string.");
+            return;
             }
 
-            advance(); // closing "
+            // The closing ".
+            advance();
 
-            String value = source.substring(start + 1, current - 1);    // remove surrounding quotes
+            // Trim the surrounding quotes.
+            String value = source.substring(start + 1, current - 1);
             addToken(STRING, value);
         }
 };
