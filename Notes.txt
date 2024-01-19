@@ -47,3 +47,7 @@ Lexical grammars of Python and Haskell are not regular because regular grammar d
     3. Context sensitive lexing
     4. Infinite recursions
 Instead Lex is used for Haskell and PLY for Python.
+Semicolons to terminate lines should be avoided.
+
+TASKS:
+1. Add support for /* */ type comments.

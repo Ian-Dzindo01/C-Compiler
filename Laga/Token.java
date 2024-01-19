@@ -7,13 +7,13 @@ class Token {
     final int line;
 
     Token(TokenType type, String lexeme, Object literal, int line) {
-        this.type = type;
-        this.lexeme = lexeme;
-        this.literal = literal;
-        this.line = line;       
+        this.type = type;                   // type of token
+        this.lexeme = lexeme;               // actual text
+        this.literal = literal;            // value
+        this.line = line;                  // line number
     }
 
-    public String toString() {
+    public String toString() {                  // pretty printing
         return type + " " + lexeme + " " + literal;
     }
 }

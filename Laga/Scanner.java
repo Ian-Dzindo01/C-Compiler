@@ -10,6 +10,11 @@ import Laga.Laga;
 import static Laga.TokenType.*;   // bad practice, but works perfect for this example
 
 class Scanner {
+
+    Scanner(String source) {    // constructor
+        this.source = source;
+    }
+
     private final String source;
     private final List <Token> tokens = new ArrayList<>();
 
@@ -17,40 +22,36 @@ class Scanner {
     private int current = 0;
     private int line = 1;
 
-    private boolean isAtEnd() {
+    private boolean isAtEnd() {           // checks if we reached the end
         return current >= source.length();
     }
 
-    private char advance() {
+    private char advance() {              // advance to next character
         return source.charAt(current++);
     }
 
-    private void addToken(TokenType type) {
+    private void addToken(TokenType type) {   // adds the token to the tokens list
         addToken(type, null);
     }
 
     private void addToken(TokenType type, Object literal) {
         String text = source.substring(start, current);
-        tokens.add(new Token(type, text, literal, line));
+        tokens.add(new Token(type, text, literal, line));     // type of token, literal value, text stored and line number
     }
 
-    Scanner(String source) {
-        this.source = source;
-    }
-
-    public List <Token> scanTokens() {
+    public List <Token> scanTokens() {             // scanToken until you reach the end
         while (!isAtEnd()) {
             start = current;
             scanToken();
         }
 
-        tokens.add(new Token(EOF, "", null, line));
+        tokens.add(new Token(EOF, "", null, line));   // at end of file token to the end
         return tokens;
     }
 
-    private static final Map<String, TokenType> keywords;
+    private static final Map<String, TokenType> keywords;     // final - cannot be altered 
 
-    static {
+    static {                                                  // link keyword strings to corresponding token types
       keywords = new HashMap<>();
       keywords.put("and",    AND);
       keywords.put("class",  CLASS);
@@ -70,8 +71,8 @@ class Scanner {
       keywords.put("while",  WHILE);
     }
 
-    private void scanToken() {
-        char c = advance();
+    private void scanToken() {                          
+        char c = advance();                            // grab next char 
         switch (c) {
           case '(': addToken(LEFT_PAREN); break;
           case ')': addToken(RIGHT_PAREN); break;
@@ -90,12 +91,12 @@ class Scanner {
             // Ignore whitespace.
             break;
     
-          case '\n':
+          case '\n':             // support for newlines
             line++;
             break;
             
-          case '!':
-          addToken(match('=') ? BANG_EQUAL : BANG); // "If the current character is '=', add a token of type BANG_EQUAL; otherwise, add a token of type BANG."
+          case '!':              // two char tokens
+          addToken(match('=') ? BANG_EQUAL : BANG); // if the current character is '=', add a token of type BANG_EQUAL; otherwise, add a token of type BANG
           break;
         case '=':
           addToken(match('=') ? EQUAL_EQUAL : EQUAL); // same onwards
@@ -107,21 +108,23 @@ class Scanner {
           addToken(match('=') ? GREATER_EQUAL : GREATER);
           break;
 
-        case '/':
-            if (match('/')) {
+        case '/':                             // commenting. NEED TO ADD SUPPORT FOR C style commenting /* */
+            if (match('/')) {        // if char after / is also / disregards rest of line because it is a comment
                 while (peek() != '\n' && !isAtEnd()) advance();
-            } else {
+            } else {                          // if not followed by another slash just treat it as divide
                 addToken(SLASH);
             }
             break;
 
-        case '"': string(); break;
+        // case '/*':
+
+        case '"': string(); break;        // string treating implemented in string function
 
         default:
-        if (isDigit(c)) {
+        if (isDigit(c)) {                // handle digits
             number();
 
-        } else if (isAlpha(c)) {
+        } else if (isAlpha(c)) {    // handle characters
             identifier();
         
         } else {
@@ -143,17 +146,17 @@ class Scanner {
             addToken(type);
         }
 
-        private boolean isAlpha(char c) {
+        private boolean isAlpha(char c) {                   // checks if its accepted char
             return (c >= 'a' && c<= 'z') ||
                    (c >= 'a' && c<= 'z') ||
                    c == '_';
         }
 
-        private boolean isAlphaNumeric(char c) {
+        private boolean isAlphaNumeric(char c) {     // check whether it is an accepted digit or char
             return isAlpha(c) || isDigit(c);
         }
 
-        private void number() {
+        private void number() {                     // handle numbers - floats
             while (isDigit(peek())) advance();
 
             if (peek() == '.' && isDigit(peekNext())) {
@@ -162,23 +165,23 @@ class Scanner {
                 while (isDigit(peek())) advance();
             }
 
-            addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
+            addToken(NUMBER, Double.parseDouble(source.substring(start, current)));        // add number to final list of tokens
         }
 
-        private boolean match(char expected) {
+        private boolean match(char expected) {                 // check if char is one we expect
             if (isAtEnd()) return false;
             if (source.charAt(current) != expected) return false;
 
-            current++;
+            current++;                                        // moves forward
             return true;
         }
 
-        private char peek() {   // lookahead. The smaller it is the faster the scanner runs.
+        private char peek() {           // lookahead. The smaller it is the faster the scanner runs.
             if (isAtEnd()) return '\0';
             return source.charAt(current);
         }
 
-        private char peekNext() {
+        private char peekNext() {                               // get next char          
             if (current + 1 >= source.length()) return '\0';
             return source.charAt(current + 1);
         }
@@ -190,16 +193,14 @@ class Scanner {
             advance();
             }
 
-            if (isAtEnd()) {
+            if (isAtEnd()) {                          // if we encounter end of line, throw error
             Laga.error(line, "Unterminated string.");
             return;
             }
 
-            // The closing ".
-            advance();
+            advance();               // the closing "
 
-            // Trim the surrounding quotes.
-            String value = source.substring(start + 1, current - 1);
+            String value = source.substring(start + 1, current - 1);            // trim surrounding quotes.
             addToken(STRING, value);
         }
 };
