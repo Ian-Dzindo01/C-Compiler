@@ -48,6 +48,9 @@ Lexical grammars of Python and Haskell are not regular because regular grammar d
     4. Infinite recursions
 Instead Lex is used for Haskell and PLY for Python.
 Semicolons to terminate lines should be avoided.
+Set of rules for parsers which will determine whether a string is valid or not.
+Backus-Naur form - describing syntax of languages.
+
 
 TASKS:
 1. Add support for /* */ type comments.
